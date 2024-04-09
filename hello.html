@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello Html!!!</h1>
+    <ul class="items"></ul>
+    <script>
+        function loadItems() {
+            return fetch("data/data.json")
+                .then((response) => response.json())
+                .then((json) => json.items);
+        }
+
+        function displayItems(items) {
+            const div = document.createElement("div");
+            document.body.appendChild(div);
+            //const container = document.querySelector(".items");
+
+            div.innerHTML = items.map((item) =>
+                createHtmlString(item)).join("");
+        }
+
+        function createHtmlString(item) {
+            return `
+                <li>
+                    <img src="${item.image}" alt="${item.type}">
+                    <span>${item.gender},${item.size}</span>
+                </li>
+            `
+        }
+
+        loadItems().then((items) => {
+           console.log(items);
+           displayItems(items);
+        });
+    </script>
+</body>
+</html>
